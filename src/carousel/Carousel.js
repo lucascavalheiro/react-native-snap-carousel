@@ -531,12 +531,7 @@ export default class Carousel extends Component {
     }
 
     _customAnimatedListener({value}) {
-        if(this._flatlist && this._flatlist._listRef) {
-            this._flatlist.scrollToOffset({
-                offset: value,
-                animated: false
-            })
-        }
+        this._scrollTo(value, false);
     }
 
     _initCustomSnapAnimation(props = this.props) {
