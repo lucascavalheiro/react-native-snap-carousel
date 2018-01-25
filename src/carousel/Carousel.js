@@ -879,9 +879,9 @@ export default class Carousel extends Component {
         }
     }
 
-    _scrollToOffset(offset, animated) {
+    _scrollToOffset(offset, animated, previousOffset) {
         if(animated && this.props.customSnapAnimation) {
-            this.props.customSnapAnimation(offset);
+            this.props.customSnapAnimation(offset, previousOffset);
         }
         else {
             this._scrollTo(offset, animated);
@@ -900,6 +900,11 @@ export default class Carousel extends Component {
             index = 0;
         } else if (itemsLength > 0 && index >= itemsLength) {
             index = itemsLength - 1;
+        }
+
+        let previousOffset = 0;
+        if (this._positions[this._previousActiveItem]) {
+            previousOffset = this._positions[this._previousActiveItem].start;
         }
 
         if (index !== this._previousActiveItem) {
@@ -923,7 +928,7 @@ export default class Carousel extends Component {
             return;
         }
 
-        this._scrollToOffset(this._scrollOffsetRef, animated);
+        this._scrollToOffset(this._scrollOffsetRef, animated, previousOffset);
 
         if (enableMomentum) {
             // iOS fix, check the note in the constructor
